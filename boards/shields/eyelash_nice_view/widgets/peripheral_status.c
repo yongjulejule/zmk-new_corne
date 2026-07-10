@@ -22,23 +22,23 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
 #include "peripheral_status.h"
 
-LV_IMG_DECLARE(potato_frame_0);
-LV_IMG_DECLARE(potato_frame_1);
-LV_IMG_DECLARE(potato_frame_2);
-LV_IMG_DECLARE(potato_frame_3);
-LV_IMG_DECLARE(potato_frame_4);
-LV_IMG_DECLARE(potato_frame_5);
+LV_IMG_DECLARE(waterfall_frame_0);
+LV_IMG_DECLARE(waterfall_frame_1);
+LV_IMG_DECLARE(waterfall_frame_2);
+LV_IMG_DECLARE(waterfall_frame_3);
+LV_IMG_DECLARE(waterfall_frame_4);
+LV_IMG_DECLARE(waterfall_frame_5);
 
-#define POTATO_FRAME_COUNT 6
-#define POTATO_FRAME_MS 700
+#define WATERFALL_FRAME_COUNT 6
+#define WATERFALL_FRAME_MS 300
 
-static const void *const potato_frames[POTATO_FRAME_COUNT] = {
-    &potato_frame_0,
-    &potato_frame_1,
-    &potato_frame_2,
-    &potato_frame_3,
-    &potato_frame_4,
-    &potato_frame_5,
+static const void *const waterfall_frames[WATERFALL_FRAME_COUNT] = {
+    &waterfall_frame_0,
+    &waterfall_frame_1,
+    &waterfall_frame_2,
+    &waterfall_frame_3,
+    &waterfall_frame_4,
+    &waterfall_frame_5,
 };
 
 static sys_slist_t widgets = SYS_SLIST_STATIC_INIT(&widgets);
@@ -47,19 +47,19 @@ struct peripheral_status_state {
     bool connected;
 };
 
-static lv_obj_t *potato_art;
-static lv_timer_t *potato_timer;
-static uint8_t potato_frame;
+static lv_obj_t *waterfall_art;
+static lv_timer_t *waterfall_timer;
+static uint8_t waterfall_frame;
 
-static void animate_potato_art(lv_timer_t *timer) {
+static void animate_waterfall_art(lv_timer_t *timer) {
     (void)timer;
 
-    if (potato_art == NULL) {
+    if (waterfall_art == NULL) {
         return;
     }
 
-    potato_frame = (potato_frame + 1) % POTATO_FRAME_COUNT;
-    lv_img_set_src(potato_art, potato_frames[potato_frame]);
+    waterfall_frame = (waterfall_frame + 1) % WATERFALL_FRAME_COUNT;
+    lv_img_set_src(waterfall_art, waterfall_frames[waterfall_frame]);
 }
 
 static void draw_top(lv_obj_t *widget, lv_color_t cbuf[], const struct status_state *state) {
@@ -145,12 +145,12 @@ int zmk_widget_status_init(struct zmk_widget_status *widget, lv_obj_t *parent) {
     lv_canvas_set_buffer(top, widget->cbuf, CANVAS_SIZE, CANVAS_SIZE, LV_IMG_CF_TRUE_COLOR);
 
     lv_obj_t *art = lv_img_create(widget->obj);
-    lv_img_set_src(art, potato_frames[0]);
+    lv_img_set_src(art, waterfall_frames[0]);
     lv_obj_align(art, LV_ALIGN_TOP_LEFT, 0, 0);
-    potato_art = art;
-    potato_frame = 0;
-    if (potato_timer == NULL) {
-        potato_timer = lv_timer_create(animate_potato_art, POTATO_FRAME_MS, NULL);
+    waterfall_art = art;
+    waterfall_frame = 0;
+    if (waterfall_timer == NULL) {
+        waterfall_timer = lv_timer_create(animate_waterfall_art, WATERFALL_FRAME_MS, NULL);
     }
 
     sys_slist_append(&widgets, &widget->node);
