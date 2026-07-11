@@ -4,8 +4,10 @@ manifest:
       url-base: https://github.com/zmkfirmware
     - name: cormoran
       url-base: https://github.com/cormoran
-    - name: dsifry # nice!view bongo cat
-      url-base: https://github.com/dsifry # nice!view bongo cat
+#    - name: dsifry # nice!view bongo cat
+#      url-base: https://github.com/dsifry # nice!view bongo cat
+    - name: gpeye                         #new entry
+      url-base: https://github.com/GPeye  #new entry
   projects:
     - name: eyelash_corne
       url: https://github.com/a741725193/zmk-new_corne
@@ -29,8 +31,11 @@ manifest:
     - name: zmk-module-runtime-input-processor
       remote: cormoran
       revision: zmk-v0.3.0.0
-    - name: nice-view-mod # nice!view bongo cat
-      remote: dsifry # nice!view bongo cat
-      revision: main # nice!view bongo cat
+#    - name: nice-view-mod # nice!view bongo cat
+#      remote: dsifry # nice!view bongo cat
+#      revision: main # nice!view bongo cat
+    - name: urchin-peripheral-animation 
+      remote: gpeye
+      revision: main
   self:
     path: config
